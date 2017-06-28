@@ -977,7 +977,7 @@ typedef struct MOCK_CALL_METADATA_TAG
         IF(COUNT_ARG(__VA_ARGS__), , IF(IS_NOT_VOID(return_type),, int dummy : 1;)) \
     } C2(mock_call_,name); \
     typedef C2(mock_call_modifier_,name) (*C3(auto_ignore_args_function_,name,_type))(C2(mock_call_modifier_,name) call_modifier, const char* call_as_string); \
-    C2(mock_call_modifier_,name) C2(auto_ignore_args_function_,name)(C2(mock_call_modifier_,name) call_modifier, const char* call_as_string) \
+    C2(mock_call_modifier_,name) UMOCK_STATIC C2(auto_ignore_args_function_,name)(C2(mock_call_modifier_,name) call_modifier, const char* call_as_string) \
     { \
         C2(mock_call_modifier_,name) result = call_modifier; \
         IF(COUNT_ARG(__VA_ARGS__), \
@@ -987,7 +987,7 @@ typedef struct MOCK_CALL_METADATA_TAG
         FOR_EACH_2(AUTO_IGNORE_ARG, __VA_ARGS__) \
         return result; \
     } \
-    C3(auto_ignore_args_function_,name,_type) C2(get_auto_ignore_args_function_,name)(IF(COUNT_ARG(__VA_ARGS__),,void) FOR_EACH_2_COUNTED(ARG_IN_SIGNATURE, __VA_ARGS__)) \
+    C3(auto_ignore_args_function_,name,_type) UMOCK_STATIC C2(get_auto_ignore_args_function_,name)(IF(COUNT_ARG(__VA_ARGS__),,void) FOR_EACH_2_COUNTED(ARG_IN_SIGNATURE, __VA_ARGS__)) \
     { \
         FOR_EACH_2(UNUSED_ARG, __VA_ARGS__) \
         return C2(auto_ignore_args_function_,name); \
