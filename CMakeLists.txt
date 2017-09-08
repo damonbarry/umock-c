@@ -14,7 +14,7 @@ option(use_cppunittest "set use_cppunittest to ON to build CppUnitTest tests on 
 
 project(umock_c)
 
-set(UMOCK_C_VERSION 1.1.9)
+set(UMOCK_C_VERSION 1.1.17)
 
 #Use solution folders.
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
