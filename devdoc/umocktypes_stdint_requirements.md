@@ -26,6 +26,14 @@ UMOCKTYPES_STDINT_HANDLERS(uint32_t, uint32_t)
 UMOCKTYPES_STDINT_HANDLERS(int32_t, int32_t)
 UMOCKTYPES_STDINT_HANDLERS(uint64_t, uint64_t)
 UMOCKTYPES_STDINT_HANDLERS(int64_t, int64_t)
+UMOCKTYPES_STDINT_HANDLERS(uint_fast8_t, uint_fast8_t)
+UMOCKTYPES_STDINT_HANDLERS(int_fast8_t, int_fast8_t)
+UMOCKTYPES_STDINT_HANDLERS(uint_fast16_t, uint_fast16_t)
+UMOCKTYPES_STDINT_HANDLERS(int_fast16_t, int_fast16_t)
+UMOCKTYPES_STDINT_HANDLERS(uint_fast32_t, uint_fast32_t)
+UMOCKTYPES_STDINT_HANDLERS(int_fast32_t, int_fast32_t)
+UMOCKTYPES_STDINT_HANDLERS(uint_fast64_t, uint_fast64_t)
+UMOCKTYPES_STDINT_HANDLERS(int_fast64_t, int_fast64_t)
 
 ```
 
@@ -424,3 +432,387 @@ extern void umocktypes_free_int64_t(int64_t* value);
 ```
 
 **SRS_UMOCKTYPES_STDINT_01_099: [** umocktypes_free_int64_t shall do nothing. **]**
+
+## umocktypes_stringify_uint_fast8_t
+
+```c
+extern char* umocktypes_stringify_uint_fast8_t(const uint_fast8_t* value);
+```
+
+**SRS_UMOCKTYPES_STDINT_01_100: [** umocktypes_stringify_uint_fast8_t shall return the string representation of value. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_101: [** If value is NULL, umocktypes_stringify_uint_fast8_t shall return NULL. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_102: [** If allocating a new string to hold the string representation fails, umocktypes_stringify_uint_fast8_t shall return NULL. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_103: [** If any other error occurs when creating the string representation, umocktypes_stringify_uint_fast8_t shall return NULL. **]**
+
+## umocktypes_are_equal_uint_fast8_t
+
+```c
+extern int umocktypes_are_equal_uint_fast8_t(const uint_fast8_t* left, const uint_fast8_t* right);
+```
+
+**SRS_UMOCKTYPES_STDINT_01_104: [** umocktypes_are_equal_uint_fast8_t shall compare the 2 uint_fast8_t values pointed to by left and right. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_105: [** If any of the arguments is NULL, umocktypes_are_equal_uint_fast8_t shall return -1. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_106: [** If the values pointed to by left and right are equal, umocktypes_are_equal_uint_fast8_t shall return 1. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_107: [** If the values pointed to by left and right are different, umocktypes_are_equal_uint_fast8_t shall return 0. **]**
+
+## umocktypes_copy_uint_fast8_t
+
+```c
+extern int umocktypes_copy_uint_fast8_t(uint_fast8_t* destination, const uint_fast8_t* source);
+```
+
+**SRS_UMOCKTYPES_STDINT_01_108: [** umocktypes_copy_uint_fast8_t shall copy the uint_fast8_t value from source to destination. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_109: [** On success umocktypes_copy_uint_fast8_t shall return 0. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_110: [** If source or destination are NULL, umocktypes_copy_uint_fast8_t shall return a non-zero value. **]**
+
+## umocktypes_free_uint_fast8_t
+
+```c
+extern void umocktypes_free_uint_fast8_t(uint_fast8_t* value);
+```
+
+**SRS_UMOCKTYPES_STDINT_01_111: [** umocktypes_free_uint_fast8_t shall do nothing. **]**
+
+## umocktypes_stringify_uint_fast8_t
+
+```c
+extern char* umocktypes_stringify_int_fast8_t(const int_fast8_t* value);
+```
+
+**SRS_UMOCKTYPES_STDINT_01_112: [** umocktypes_stringify_int_fast8_t shall return the string representation of value. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_113: [** If value is NULL, umocktypes_stringify_int_fast8_t shall return NULL. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_114: [** If allocating a new string to hold the string representation fails, umocktypes_stringify_int_fast8_t shall return NULL. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_115: [** If any other error occurs when creating the string representation, umocktypes_stringify_int_fast8_t shall return NULL. **]**
+
+## umocktypes_are_equal_int_fast8_t
+
+```c
+extern int umocktypes_are_equal_int_fast8_t(const int_fast8_t* left, const int_fast8_t* right);
+```
+
+**SRS_UMOCKTYPES_STDINT_01_116: [** umocktypes_are_equal_int_fast8_t shall compare the 2 int_fast8_t values pointed to by left and right. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_117: [** If any of the arguments is NULL, umocktypes_are_equal_int_fast8_t shall return -1. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_118: [** If the values pointed to by left and right are equal, umocktypes_are_equal_int_fast8_t shall return 1. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_119: [** If the values pointed to by left and right are different, umocktypes_are_equal_int_fast8_t shall return 0. **]**
+
+## umocktypes_copy_int_fast8_t
+
+```c
+extern int umocktypes_copy_int_fast8_t(int_fast8_t* destination, const int_fast8_t* source);
+```
+
+**SRS_UMOCKTYPES_STDINT_01_120: [** umocktypes_copy_int_fast8_t shall copy the int_fast8_t value from source to destination. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_121: [** On success umocktypes_copy_int_fast8_t shall return 0. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_122: [** If source or destination are NULL, umocktypes_copy_int_fast8_t shall return a non-zero value. **]**
+
+## umocktypes_free_int_fast8_t
+
+```c
+extern void umocktypes_free_int_fast8_t(int_fast8_t* value);
+```
+
+**SRS_UMOCKTYPES_STDINT_01_123: [** umocktypes_free_int_fast8_t shall do nothing. **]**
+
+## umocktypes_stringify_uint_fast16_t
+
+```c
+extern char* umocktypes_stringify_uint_fast16_t(const uint_fast16_t* value);
+```
+
+**SRS_UMOCKTYPES_STDINT_01_124: [** umocktypes_stringify_uint_fast16_t shall return the string representation of value. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_125: [** If value is NULL, umocktypes_stringify_uint_fast16_t shall return NULL. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_126: [** If allocating a new string to hold the string representation fails, umocktypes_stringify_uint_fast16_t shall return NULL. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_127: [** If any other error occurs when creating the string representation, umocktypes_stringify_uint_fast16_t shall return NULL. **]**
+
+## umocktypes_are_equal_uint_fast16_t
+
+```c
+extern int umocktypes_are_equal_uint_fast16_t(const uint_fast16_t* left, const uint_fast16_t* right);
+```
+
+**SRS_UMOCKTYPES_STDINT_01_128: [** umocktypes_are_equal_uint_fast16_t shall compare the 2 uint_fast16_t values pointed to by left and right. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_129: [** If any of the arguments is NULL, umocktypes_are_equal_uint_fast16_t shall return -1. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_130: [** If the values pointed to by left and right are equal, umocktypes_are_equal_uint_fast16_t shall return 1. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_131: [** If the values pointed to by left and right are different, umocktypes_are_equal_uint_fast16_t shall return 0. **]**
+
+## umocktypes_copy_uint_fast16_t
+
+```c
+extern int umocktypes_copy_uint_fast16_t(uint_fast16_t* destination, const uint_fast16_t* source);
+```
+
+**SRS_UMOCKTYPES_STDINT_01_132: [** umocktypes_copy_uint_fast16_t shall copy the uint_fast16_t value from source to destination. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_133: [** On success umocktypes_copy_uint_fast16_t shall return 0. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_134: [** If source or destination are NULL, umocktypes_copy_uint_fast16_t shall return a non-zero value. **]**
+
+## umocktypes_free_uint_fast16_t
+
+```c
+extern void umocktypes_free_uint_fast16_t(uint_fast16_t* value);
+```
+
+**SRS_UMOCKTYPES_STDINT_01_135: [** umocktypes_free_uint_fast16_t shall do nothing. **]**
+
+## umocktypes_stringify_int_fast16_t
+
+```c
+extern char* umocktypes_stringify_int_fast16_t(const int_fast16_t* value);
+```
+
+**SRS_UMOCKTYPES_STDINT_01_136: [** umocktypes_stringify_int_fast16_t shall return the string representation of value. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_137: [** If value is NULL, umocktypes_stringify_int_fast16_t shall return NULL. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_138: [** If allocating a new string to hold the string representation fails, umocktypes_stringify_int_fast16_t shall return NULL. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_139: [** If any other error occurs when creating the string representation, umocktypes_stringify_int_fast16_t shall return NULL. **]**
+
+## umocktypes_are_equal_int_fast16_t
+
+```c
+extern int umocktypes_are_equal_int_fast16_t(const int_fast16_t* left, const int_fast16_t* right);
+```
+
+**SRS_UMOCKTYPES_STDINT_01_140: [** umocktypes_are_equal_int_fast16_t shall compare the 2 int_fast16_t values pointed to by left and right. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_141: [** If any of the arguments is NULL, umocktypes_are_equal_int_fast16_t shall return -1. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_142: [** If the values pointed to by left and right are equal, umocktypes_are_equal_int_fast16_t shall return 1. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_143: [** If the values pointed to by left and right are different, umocktypes_are_equal_int_fast16_t shall return 0. **]**
+
+## umocktypes_copy_int_fast16_t
+
+```c
+extern int umocktypes_copy_int_fast16_t(int_fast16_t* destination, const int_fast16_t* source);
+```
+
+**SRS_UMOCKTYPES_STDINT_01_144: [** umocktypes_copy_int_fast16_t shall copy the int_fast16_t value from source to destination. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_145: [** On success umocktypes_copy_int_fast16_t shall return 0. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_146: [** If source or destination are NULL, umocktypes_copy_int_fast16_t shall return a non-zero value. **]**
+
+## umocktypes_free_int_fast16_t
+
+```c
+extern void umocktypes_free_int_fast16_t(int_fast16_t* value);
+```
+
+**SRS_UMOCKTYPES_STDINT_01_147: [** umocktypes_free_int_fast16_t shall do nothing. **]**
+
+## umocktypes_stringify_uint_fast32_t
+
+```c
+extern char* umocktypes_stringify_uint_fast32_t(const uint_fast32_t* value);
+```
+
+**SRS_UMOCKTYPES_STDINT_01_148: [** umocktypes_stringify_uint_fast32_t shall return the string representation of value. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_149: [** If value is NULL, umocktypes_stringify_uint_fast32_t shall return NULL. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_150: [** If allocating a new string to hold the string representation fails, umocktypes_stringify_uint_fast32_t shall return NULL. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_151: [** If any other error occurs when creating the string representation, umocktypes_stringify_uint_fast32_t shall return NULL. **]**
+
+## umocktypes_are_equal_uint_fast32_t
+
+```c
+extern int umocktypes_are_equal_uint_fast32_t(const uint_fast32_t* left, const uint_fast32_t* right);
+```
+
+**SRS_UMOCKTYPES_STDINT_01_152: [** umocktypes_are_equal_uint_fast32_t shall compare the 2 uint_fast32_t values pointed to by left and right. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_153: [** If any of the arguments is NULL, umocktypes_are_equal_uint_fast32_t shall return -1. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_154: [** If the values pointed to by left and right are equal, umocktypes_are_equal_uint_fast32_t shall return 1. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_155: [** If the values pointed to by left and right are different, umocktypes_are_equal_uint_fast32_t shall return 0. **]**
+
+## umocktypes_copy_uint_fast32_t
+
+```c
+extern int umocktypes_copy_uint_fast32_t(uint_fast32_t* destination, const uint_fast32_t* source);
+```
+
+**SRS_UMOCKTYPES_STDINT_01_156: [** umocktypes_copy_uint_fast32_t shall copy the uint_fast32_t value from source to destination. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_157: [** On success umocktypes_copy_uint_fast32_t shall return 0. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_158: [** If source or destination are NULL, umocktypes_copy_uint_fast32_t shall return a non-zero value. **]**
+
+## umocktypes_free_uint_fast32_t
+
+```c
+extern void umocktypes_free_uint_fast32_t(uint_fast32_t* value);
+```
+
+**SRS_UMOCKTYPES_STDINT_01_159: [** umocktypes_free_uint_fast32_t shall do nothing. **]**
+
+## umocktypes_stringify_int_fast32_t
+
+```c
+extern char* umocktypes_stringify_int_fast32_t(const int_fast32_t* value);
+```
+
+**SRS_UMOCKTYPES_STDINT_01_160: [** umocktypes_stringify_int_fast32_t shall return the string representation of value. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_161: [** If value is NULL, umocktypes_stringify_int_fast32_t shall return NULL. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_162: [** If allocating a new string to hold the string representation fails, umocktypes_stringify_int_fast32_t shall return NULL. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_163: [** If any other error occurs when creating the string representation, umocktypes_stringify_int_fast32_t shall return NULL. **]**
+
+## umocktypes_are_equal_int_fast32_t
+
+```c
+extern int umocktypes_are_equal_int_fast32_t(const int_fast32_t* left, const int_fast32_t* right);
+```
+
+**SRS_UMOCKTYPES_STDINT_01_164: [** umocktypes_are_equal_int_fast32_t shall compare the 2 int_fast32_t values pointed to by left and right. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_165: [** If any of the arguments is NULL, umocktypes_are_equal_int_fast32_t shall return -1. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_166: [** If the values pointed to by left and right are equal, umocktypes_are_equal_int_fast32_t shall return 1. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_167: [** If the values pointed to by left and right are different, umocktypes_are_equal_int_fast32_t shall return 0. **]**
+
+## umocktypes_copy_int_fast32_t
+
+```c
+extern int umocktypes_copy_int_fast32_t(int_fast32_t* destination, const int_fast32_t* source);
+```
+
+**SRS_UMOCKTYPES_STDINT_01_168: [** umocktypes_copy_int_fast32_t shall copy the int_fast32_t value from source to destination. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_169: [** On success umocktypes_copy_int_fast32_t shall return 0. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_170: [** If source or destination are NULL, umocktypes_copy_int_fast32_t shall return a non-zero value. **]**
+
+## umocktypes_free_int_fast32_t
+
+```c
+extern void umocktypes_free_int_fast32_t(int_fast32_t* value);
+```
+
+**SRS_UMOCKTYPES_STDINT_01_171: [** umocktypes_free_int_fast32_t shall do nothing. **]**
+
+## umocktypes_stringify_uint_fast64_t
+
+```c
+extern char* umocktypes_stringify_uint_fast64_t(const uint_fast64_t* value);
+```
+
+**SRS_UMOCKTYPES_STDINT_01_172: [** umocktypes_stringify_uint_fast64_t shall return the string representation of value. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_173: [** If value is NULL, umocktypes_stringify_uint_fast64_t shall return NULL. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_174: [** If allocating a new string to hold the string representation fails, umocktypes_stringify_uint_fast64_t shall return NULL. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_175: [** If any other error occurs when creating the string representation, umocktypes_stringify_uint_fast64_t shall return NULL. **]**
+
+## umocktypes_are_equal_uint_fast64_t
+
+```c
+extern int umocktypes_are_equal_uint_fast64_t(const uint_fast64_t* left, const uint_fast64_t* right);
+```
+
+**SRS_UMOCKTYPES_STDINT_01_176: [** umocktypes_are_equal_uint_fast64_t shall compare the 2 uint_fast64_t values pointed to by left and right. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_177: [** If any of the arguments is NULL, umocktypes_are_equal_uint_fast64_t shall return -1. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_178: [** If the values pointed to by left and right are equal, umocktypes_are_equal_uint_fast64_t shall return 1. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_179: [** If the values pointed to by left and right are different, umocktypes_are_equal_uint_fast64_t shall return 0. **]**
+
+## umocktypes_copy_uint_fast64_t
+
+```c
+extern int umocktypes_copy_uint_fast64_t(uint_fast64_t* destination, const uint_fast64_t* source);
+```
+
+**SRS_UMOCKTYPES_STDINT_01_180: [** umocktypes_copy_uint_fast64_t shall copy the uint_fast64_t value from source to destination. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_181: [** On success umocktypes_copy_uint_fast64_t shall return 0. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_182: [** If source or destination are NULL, umocktypes_copy_uint_fast64_t shall return a non-zero value. **]**
+
+## umocktypes_free_uint_fast64_t
+
+```c
+extern void umocktypes_free_uint_fast64_t(uint_fast64_t* value);
+```
+
+**SRS_UMOCKTYPES_STDINT_01_183: [** umocktypes_free_uint_fast64_t shall do nothing. **]**
+
+## umocktypes_stringify_int_fast64_t
+
+```c
+extern char* umocktypes_stringify_int_fast64_t(const int_fast64_t* value);
+```
+
+**SRS_UMOCKTYPES_STDINT_01_184: [** umocktypes_stringify_int_fast64_t shall return the string representation of value. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_185: [** If value is NULL, umocktypes_stringify_int_fast64_t shall return NULL. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_186: [** If allocating a new string to hold the string representation fails, umocktypes_stringify_int_fast64_t shall return NULL. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_187: [** If any other error occurs when creating the string representation, umocktypes_stringify_int_fast64_t shall return NULL. **]**
+
+## umocktypes_are_equal_int_fast64_t
+
+```c
+extern int umocktypes_are_equal_int_fast64_t(const int_fast64_t* left, const int_fast64_t* right);
+```
+
+**SRS_UMOCKTYPES_STDINT_01_188: [** umocktypes_are_equal_int_fast64_t shall compare the 2 int_fast64_t values pointed to by left and right. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_189: [** If any of the arguments is NULL, umocktypes_are_equal_int_fast64_t shall return -1. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_190: [** If the values pointed to by left and right are equal, umocktypes_are_equal_int_fast64_t shall return 1. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_191: [** If the values pointed to by left and right are different, umocktypes_are_equal_int_fast64_t shall return 0. **]**
+
+## umocktypes_copy_int_fast64_t
+
+```c
+extern int umocktypes_copy_int_fast64_t(int_fast64_t* destination, const int_fast64_t* source);
+```
+
+**SRS_UMOCKTYPES_STDINT_01_192: [** umocktypes_copy_int_fast64_t shall copy the int_fast64_t value from source to destination. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_193: [** On success umocktypes_copy_int_fast64_t shall return 0. **]**
+
+**SRS_UMOCKTYPES_STDINT_01_194: [** If source or destination are NULL, umocktypes_copy_int_fast64_t shall return a non-zero value. **]**
+
+## umocktypes_free_int_fast64_t
+
+```c
+extern void umocktypes_free_int_fast64_t(int_fast64_t* value);
+```
+
+**SRS_UMOCKTYPES_STDINT_01_195: [** umocktypes_free_int_fast64_t shall do nothing. **]**
