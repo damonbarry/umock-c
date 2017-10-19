@@ -199,10 +199,10 @@ TEST_FUNCTION_CLEANUP(test_function_cleanup)
 TEST_FUNCTION(umocktypes_stringify_charptr_with_an_empty_string_returns_2_quotes)
 {
     // arrange
-    char* input = "";
+    const char* input = "";
 
     // act
-    char* result = umocktypes_stringify_charptr((const char**)&input);
+    char* result = umocktypes_stringify_charptr(&input);
 
     // assert
     ASSERT_ARE_EQUAL(char_ptr, "\"\"", result);
@@ -244,7 +244,7 @@ TEST_FUNCTION(when_allocating_memory_fails_then_umocktypes_stringify_charptr_fai
 {
     // arrange
     char* input = "test";
-	char* result;
+    char* result;
     when_shall_malloc_fail = 1;
 
     // act
@@ -356,7 +356,7 @@ TEST_FUNCTION(umocktypes_are_equal_charptr_with_string_being_the_same_returns_1)
     // arrange
     char* input1 = (char*)malloc(7);
     char* input2 = (char*)malloc(7);
-	int result;
+    int result;
     (void)strcpy(input1, "test42");
     (void)strcpy(input2, "test42");
 
@@ -377,7 +377,7 @@ TEST_FUNCTION(umocktypes_are_equal_charptr_with_string_being_different_returns_0
     // arrange
     char* input1 = (char*)malloc(7);
     char* input2 = (char*)malloc(7);
-	int result;
+    int result;
 
     (void)strcpy(input1, "test42");
     (void)strcpy(input2, "test43");
@@ -399,7 +399,7 @@ TEST_FUNCTION(umocktypes_are_equal_charptr_with_string_being_different_in_case_r
     // arrange
     char* input1 = (char*)malloc(5);
     char* input2 = (char*)malloc(5);
-	int result;
+    int result;
 
     (void)strcpy(input1, "Test");
     (void)strcpy(input2, "test");
@@ -493,7 +493,7 @@ TEST_FUNCTION(when_allocating_memory_fails_umocktypes_copy_charptr_fails)
     // arrange
     char* destination;
     const char* source = "b";
-	int result;
+    int result;
 
     when_shall_malloc_fail = 1;
 
@@ -540,10 +540,10 @@ TEST_FUNCTION(umocktypes_free_charptr_with_NULL_does_nothing)
 TEST_FUNCTION(umocktypes_stringify_const_charptr_with_an_empty_string_returns_2_quotes)
 {
     // arrange
-    char* input = "";
+    const char* input = "";
 
     // act
-    char* result = umocktypes_stringify_const_charptr((const char**)&input);
+    char* result = umocktypes_stringify_const_charptr(&input);
 
     // assert
     ASSERT_ARE_EQUAL(char_ptr, "\"\"", result);
@@ -585,7 +585,7 @@ TEST_FUNCTION(when_allocating_memory_fails_then_umocktypes_stringify_const_charp
 {
     // arrange
     const char* input = "test";
-	char* result;
+    char* result;
     when_shall_malloc_fail = 1;
 
     // act
@@ -656,7 +656,7 @@ TEST_FUNCTION(umocktypes_are_equal_const_charptr_with_string_being_the_same_retu
     // arrange
     char* input1 = (char*)malloc(7);
     char* input2 = (char*)malloc(7);
-	int result;
+    int result;
 
     (void)strcpy(input1, "test42");
     (void)strcpy(input2, "test42");
@@ -678,7 +678,7 @@ TEST_FUNCTION(umocktypes_are_equal_const_charptr_with_string_being_different_ret
     // arrange
     char* input1 = (char*)malloc(7);
     char* input2 = (char*)malloc(7);
-	int result;
+    int result;
 
     (void)strcpy(input1, "test42");
     (void)strcpy(input2, "test43");
@@ -700,7 +700,7 @@ TEST_FUNCTION(umocktypes_are_equal_const_charptr_with_string_being_different_in_
     // arrange
     char* input1 = (char*)malloc(5);
     char* input2 = (char*)malloc(5);
-	int result;
+    int result;
 
     (void)strcpy(input1, "Test");
     (void)strcpy(input2, "test");
@@ -794,7 +794,7 @@ TEST_FUNCTION(when_allocating_memory_fails_umocktypes_copy_const_charptr_fails)
     // arrange
     const char* destination;
     const char* source = "b";
-	int result;
+    int result;
 
     when_shall_malloc_fail = 1;
 
@@ -843,7 +843,7 @@ TEST_FUNCTION(umocktypes_charptr_register_types_registers_all_types)
 {
     // arrange
     size_t i;
-	int result;
+    int result;
 
     when_shall_umocktypes_register_typecall_fail = 0;
     umocktypes_register_type_call_result = 0;
@@ -874,7 +874,7 @@ TEST_FUNCTION(when_the_underlying_register_fails_umocktypes_charptr_register_typ
     for (i = 0; i < 2; i++)
     {
         // arrange
-		int result;
+        int result;
         reset_umocktypes_register_type_calls();
         umocktypes_register_type_fail_call_result = 1;
         when_shall_umocktypes_register_typecall_fail = i + 1;
