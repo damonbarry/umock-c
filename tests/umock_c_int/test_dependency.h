@@ -62,6 +62,8 @@ extern "C" {
     MOCKABLE_FUNCTION(, void, test_dependency_with_void_ptr, void*, argument);
     MOCKABLE_FUNCTION(, void, test_dependency_with_const_void_ptr, const void*, argument);
     MOCKABLE_FUNCTION(, void, test_dependency_with_array_arg, ARRAY_TYPE, argument);
+    MOCKABLE_FUNCTION(, void, test_dependency_with_volatile_arg, volatile int, argument);
+    MOCKABLE_FUNCTION(, void, test_dependency_with_volatile_pointer_arg, int volatile*, argument);
 
     typedef enum TEST_ENUM_TAG
     {

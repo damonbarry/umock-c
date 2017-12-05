@@ -327,6 +327,10 @@ MOCK_FUNCTION_WITH_CODE(, SOME_STRUCT, some_create_with_struct, int, a);
 MOCK_FUNCTION_END(test_struct)
 MOCK_FUNCTION_WITH_CODE(, void, some_destroy_with_struct, SOME_STRUCT, s);
 MOCK_FUNCTION_END()
+MOCK_FUNCTION_WITH_CODE(, void, mock_function_with_code_with_volatile_arg, volatile int, a);
+MOCK_FUNCTION_END()
+MOCK_FUNCTION_WITH_CODE(, void, mock_function_with_code_with_volatile_pointer_arg, int volatile*, a);
+MOCK_FUNCTION_END()
 
 BEGIN_TEST_SUITE(umock_c_integrationtests)
 

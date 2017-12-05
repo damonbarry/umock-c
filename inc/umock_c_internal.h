@@ -126,10 +126,10 @@ typedef int(*TRACK_DESTROY_FUNC_TYPE)(PAIRED_HANDLES* paired_handles, const void
 #define STRINGIFY_ARGS_DECLARE_RESULT_VAR(count, arg_type, arg_name) \
     char* C2(arg_name,_stringified) \
     = (C2(typed_mock_call_data->validate_arg_value_pointer_, arg_name) != NULL) ? \
-      umocktypes_stringify(TOSTRING(arg_type), C2(typed_mock_call_data->validate_arg_value_pointer_, arg_name)) : \
+      umocktypes_stringify(TOSTRING(arg_type), (void*)C2(typed_mock_call_data->validate_arg_value_pointer_, arg_name)) : \
       ((typed_mock_call_data->validate_arg_buffers[COUNT_OF(typed_mock_call_data->out_arg_buffers) - DIV2(count)].bytes != NULL) ? \
         umockc_stringify_buffer(typed_mock_call_data->validate_arg_buffers[COUNT_OF(typed_mock_call_data->validate_arg_buffers) - DIV2(count)].bytes, typed_mock_call_data->validate_arg_buffers[COUNT_OF(typed_mock_call_data->validate_arg_buffers) - DIV2(count)].length) : \
-        umocktypes_stringify(TOSTRING(arg_type), &typed_mock_call_data->arg_name));
+        umocktypes_stringify(TOSTRING(arg_type), (void*)&typed_mock_call_data->arg_name));
 
 #define STRINGIFY_ARGS_CHECK_ARG_STRINGIFY_SUCCESS(arg_type, arg_name) if (C2(arg_name,_stringified) == NULL) is_error = 1;
 #define STRINGIFY_ARGS_DECLARE_ARG_STRING_LENGTH(arg_type, arg_name) size_t C2(arg_name,_stringified_length) = strlen(C2(arg_name,_stringified));
@@ -1216,7 +1216,7 @@ typedef struct MOCK_CALL_METADATA_TAG
         } \
         IF(COUNT_ARG(__VA_ARGS__), if (C2(track_create_destroy_pair_free_, name) != NULL) \
         { \
-            if (C2(track_create_destroy_pair_free_, name)(C2(used_paired_handles_, name), &ONLY_FIRST_ARG(__VA_ARGS__, 1)) != 0) \
+            if (C2(track_create_destroy_pair_free_, name)(C2(used_paired_handles_, name), (void*)&ONLY_FIRST_ARG(__VA_ARGS__, 1)) != 0) \
             { \
                 UMOCK_LOG("Could not track the destroy call for %s.", TOSTRING(name)); \
                 umock_c_indicate_error(UMOCK_C_ERROR); \
