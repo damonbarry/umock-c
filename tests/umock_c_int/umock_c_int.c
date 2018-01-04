@@ -331,6 +331,8 @@ MOCK_FUNCTION_WITH_CODE(, void, mock_function_with_code_with_volatile_arg, volat
 MOCK_FUNCTION_END()
 MOCK_FUNCTION_WITH_CODE(, void, mock_function_with_code_with_volatile_pointer_arg, int volatile*, a);
 MOCK_FUNCTION_END()
+MOCK_FUNCTION_WITH_CODE(, volatile void*, mock_function_with_code_with_volatile_ptr_return);
+MOCK_FUNCTION_END(NULL)
 
 BEGIN_TEST_SUITE(umock_c_integrationtests)
 

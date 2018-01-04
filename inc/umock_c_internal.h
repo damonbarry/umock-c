@@ -1238,16 +1238,16 @@ typedef struct MOCK_CALL_METADATA_TAG
 			}; \
 			if (captured_return_value != NULL) \
 			{ \
-				(void)memcpy(captured_return_value, &result, sizeof(result)); \
+				(void)memcpy(captured_return_value, (void*)&result, sizeof(result)); \
 			} \
-			IF(IS_NOT_VOID(return_type),if ((track_create_destroy_pair_malloc_local != NULL) && (fail_result_value_set == 0)) \
+			if ((track_create_destroy_pair_malloc_local != NULL) && (fail_result_value_set == 0)) \
 			{ \
 				if (track_create_destroy_pair_malloc_local(used_paired_handles_local, (const void*)&result, return_type_string, sizeof(result)) != 0) \
 				{ \
 					UMOCK_LOG("Could not track the create call for %s.", TOSTRING(name)); \
 					umock_c_indicate_error(UMOCK_C_ERROR); \
 				} \
-			},) \
+			} \
 			return result;,) \
 		} \
 	} \
@@ -1268,7 +1268,7 @@ typedef struct MOCK_CALL_METADATA_TAG
 			}; \
 			if (captured_return_value != NULL) \
 			{ \
-				(void)memcpy(captured_return_value, &result, sizeof(result)); \
+				(void)memcpy(captured_return_value, (void*)&result, sizeof(result)); \
 			} \
 			if ((track_create_destroy_pair_malloc_local != NULL) && (fail_result_value_set == 0)) \
 			{ \
