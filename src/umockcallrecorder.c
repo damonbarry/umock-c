@@ -3,7 +3,6 @@
 
 #include <stddef.h>
 #include <string.h>
-#include <stdbool.h>
 #include "umockcallrecorder.h"
 #include "umockcall.h"
 #include "umocktypes.h"
@@ -24,7 +23,6 @@ typedef struct UMOCKCALLRECORDER_TAG
     UMOCKCALL_HANDLE* actual_calls;
     char* expected_calls_string;
     char* actual_calls_string;
-    bool immediate_error_on_unexpected_call;
 } UMOCKCALLRECORDER;
 
 UMOCKCALLRECORDER_HANDLE umockcallrecorder_create(void)
@@ -42,7 +40,6 @@ UMOCKCALLRECORDER_HANDLE umockcallrecorder_create(void)
         result->actual_call_count = 0;
         result->actual_calls = NULL;
         result->actual_calls_string = NULL;
-        result->immediate_error_on_unexpected_call = false;
     }
 
     return result;
@@ -99,7 +96,6 @@ int umockcallrecorder_reset_all_calls(UMOCKCALLRECORDER_HANDLE umock_call_record
             umock_call_recorder->actual_calls = NULL;
         }
         umock_call_recorder->actual_call_count = 0;
-        umock_call_recorder->immediate_error_on_unexpected_call = false;
 
         /* Codes_SRS_UMOCKCALLRECORDER_01_006: [ On success umockcallrecorder_reset_all_calls shall return 0. ]*/
         result = 0;
@@ -226,30 +222,20 @@ int umockcallrecorder_add_actual_call(UMOCKCALLRECORDER_HANDLE umock_call_record
             if (i == umock_call_recorder->expected_call_count)
             {
                 /* an unexpected call */
-                if (umock_call_recorder->immediate_error_on_unexpected_call == true)
+                /* Codes_SRS_UMOCKCALLRECORDER_01_014: [ umockcallrecorder_add_actual_call shall check whether the call mock_call matches any of the expected calls maintained by umock_call_recorder. ]*/
+                UMOCKCALL_HANDLE* new_actual_calls = (UMOCKCALL_HANDLE*)umockalloc_realloc(umock_call_recorder->actual_calls, sizeof(UMOCKCALL_HANDLE) * (umock_call_recorder->actual_call_count + 1));
+                if (new_actual_calls == NULL)
                 {
-                    char* stringified_call = umockcall_stringify(mock_call);
-                    UMOCK_LOG("umockcallrecorder: Error in finding a matched call for function = %s.", stringified_call ? stringified_call : "[UNKNOWN]");
-					umockalloc_free(stringified_call);
+                    UMOCK_LOG("umockcallrecorder: Cannot allocate memory for actual calls.");
                     result = __LINE__;
                 }
                 else
-                {            
-                    /* Codes_SRS_UMOCKCALLRECORDER_01_014: [ umockcallrecorder_add_actual_call shall check whether the call mock_call matches any of the expected calls maintained by umock_call_recorder. ]*/
-                    UMOCKCALL_HANDLE* new_actual_calls = (UMOCKCALL_HANDLE*)umockalloc_realloc(umock_call_recorder->actual_calls, sizeof(UMOCKCALL_HANDLE) * (umock_call_recorder->actual_call_count + 1));
-                    if (new_actual_calls == NULL)
-                    {
-                        UMOCK_LOG("umockcallrecorder: Cannot allocate memory for actual calls.");
-                        result = __LINE__;
-                    }
-                    else
-                    {
-                        umock_call_recorder->actual_calls = new_actual_calls;
-                        umock_call_recorder->actual_calls[umock_call_recorder->actual_call_count++] = mock_call;
+                {
+                    umock_call_recorder->actual_calls = new_actual_calls;
+                    umock_call_recorder->actual_calls[umock_call_recorder->actual_call_count++] = mock_call;
 
-                        /* Codes_SRS_UMOCKCALLRECORDER_01_018: [ When no error is encountered, umockcallrecorder_add_actual_call shall return 0. ]*/
-                        result = 0;
-                    }
+                    /* Codes_SRS_UMOCKCALLRECORDER_01_018: [ When no error is encountered, umockcallrecorder_add_actual_call shall return 0. ]*/
+                    result = 0;
                 }
             }
             else
@@ -647,16 +633,3 @@ int umockcallrecorder_fail_call(UMOCKCALLRECORDER_HANDLE umock_call_recorder, si
 
     return result;
 }
-
-int umockcallrecorder_set_immediate_error_on_unexpected_call(UMOCKCALLRECORDER_HANDLE umock_call_recorder)
-{
-    umock_call_recorder->immediate_error_on_unexpected_call = true;
-    return 0;
-}
-
-int umockcallrecorder_reset_immediate_error_on_unexpected_call(UMOCKCALLRECORDER_HANDLE umock_call_recorder)
-{
-    umock_call_recorder->immediate_error_on_unexpected_call = false;
-    return 0;
-}
-
