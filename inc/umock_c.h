@@ -99,6 +99,8 @@ extern const char* umock_c_get_actual_calls(void);
 extern const char* umock_c_get_expected_calls(void);
 extern UMOCKCALLRECORDER_HANDLE umock_c_get_call_recorder(void);
 extern int umock_c_set_call_recorder(UMOCKCALLRECORDER_HANDLE umockc_call_recorder);
+extern int umock_c_set_immediate_error_on_unexpected_call();
+extern int umock_c_reset_immediate_error_on_unexpected_call();
 
 /* Codes_SRS_UMOCK_C_LIB_01_065: [REGISTER_UMOCK_VALUE_TYPE shall register the type identified by value_type to be usable by umock_c for argument and return types and instruct umock_c which functions to use for getting the stringify, are_equal, copy and free.]*/
 /* Codes_SRS_UMOCK_C_LIB_01_197: [ If REGISTER_UMOCK_VALUE_TYPE fails, the on_error callback shall be called with UMOCK_C_REGISTER_TYPE_FAILED. ]*/

@@ -208,6 +208,40 @@ UMOCKCALL_HANDLE umock_c_get_last_expected_call(void)
     return result;
 }
 
+int umock_c_set_immediate_error_on_unexpected_call()
+{
+    int result;
+
+    if (umock_c_state != UMOCK_C_STATE_INITIALIZED)
+    {
+        UMOCK_LOG("umock_c: Cannot add an actual call, umock_c not initialized.");
+        result = __LINE__;
+    }
+    else
+    {
+         result = umockcallrecorder_set_immediate_error_on_unexpected_call(umock_call_recorder);
+    }
+
+    return result;
+} 
+
+int umock_c_reset_immediate_error_on_unexpected_call()
+{
+    int result;
+
+    if (umock_c_state != UMOCK_C_STATE_INITIALIZED)
+    {
+        UMOCK_LOG("umock_c: Cannot add an actual call, umock_c not initialized.");
+        result = __LINE__;
+    }
+    else
+    {
+         result = umockcallrecorder_reset_immediate_error_on_unexpected_call(umock_call_recorder);
+    }
+
+    return result;
+} 
+
 void umock_c_indicate_error(UMOCK_C_ERROR_CODE error_code)
 {
     if (on_umock_c_error_function != NULL)
@@ -277,3 +311,4 @@ int umock_c_set_call_recorder(UMOCKCALLRECORDER_HANDLE call_recorder)
 
     return result;
 }
+
