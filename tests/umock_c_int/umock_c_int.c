@@ -1695,7 +1695,7 @@ TEST_FUNCTION(When_ValidateArgumentBuffer_is_called_twice_the_last_buffer_is_use
 /* REGISTER_GLOBAL_MOCK_HOOK */
 
 /* Tests_SRS_UMOCK_C_LIB_01_104: [The REGISTER_GLOBAL_MOCK_HOOK shall register a mock hook to be called every time the mocked function is called by production code.]*/
-/* Tests_SRS_UMOCK_C_LIB_01_105: [The hook’s result shall be returned by the mock to the production code.]*/
+/* Tests_SRS_UMOCK_C_LIB_01_105: [The hook's result shall be returned by the mock to the production code.]*/
 /* Tests_SRS_UMOCK_C_LIB_01_106: [The signature for the hook shall be assumed to have exactly the same arguments and return as the mocked function.]*/
 TEST_FUNCTION(REGISTER_GLOBAL_MOCK_HOOK_registers_a_hook_for_the_mock)
 {
@@ -1711,7 +1711,7 @@ TEST_FUNCTION(REGISTER_GLOBAL_MOCK_HOOK_registers_a_hook_for_the_mock)
 }
 
 /* Tests_SRS_UMOCK_C_LIB_01_104: [The REGISTER_GLOBAL_MOCK_HOOK shall register a mock hook to be called every time the mocked function is called by production code.]*/
-/* Tests_SRS_UMOCK_C_LIB_01_105: [The hook’s result shall be returned by the mock to the production code.]*/
+/* Tests_SRS_UMOCK_C_LIB_01_105: [The hook's result shall be returned by the mock to the production code.]*/
 TEST_FUNCTION(REGISTER_GLOBAL_MOCK_HOOK_registers_a_hook_for_the_mock_that_returns_2_different_values)
 {
     // arrange

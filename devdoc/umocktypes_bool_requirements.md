@@ -1,6 +1,6 @@
 
 ﻿# umocktypes_bool requirements
- 
+
 # Overview
 
 umocktypes_c is a module that exposes out of the box functionality for bool and \_Bool for umock_c.

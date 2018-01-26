@@ -1,5 +1,5 @@
 # umock_c_negative_tests requirements
- 
+
 # Overview
 
 umock_c_negative_tests is an addon to umock_c that exposes APIs used to automate negative tests.

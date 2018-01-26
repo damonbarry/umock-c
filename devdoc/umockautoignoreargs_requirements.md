@@ -1,5 +1,5 @@
 ﻿# umockautoignoreargs requirements
- 
+
 # Overview
 
 `umockautoignoreargs` is a module that provides the functionality of inspecting the arguments of a function to determine whether they should be ignored or not.

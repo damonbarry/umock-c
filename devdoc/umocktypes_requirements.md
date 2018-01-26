@@ -1,6 +1,6 @@
 
 # umocktypes requirements
- 
+
 # Overview
 
 umocktypes is a module that exposes a generic type interface to be used by umockc for registering various C types. Later operations are possible with these types, specifically: converting any type value to a string, comparing values, copying and freeing values.

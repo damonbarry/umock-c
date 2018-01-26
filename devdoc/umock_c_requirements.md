@@ -1,5 +1,5 @@
 # umock_c requirements
- 
+
 # Overview
 
 umock_c is a module that exposes the user facing API for umock_c.

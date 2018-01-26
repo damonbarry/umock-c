@@ -1,6 +1,6 @@
 
 # umocktypes_stdint requirements
- 
+
 # Overview
 
 umocktypes_stdint is a module that exposes out of the box functionality for types defined in stdint in C99.

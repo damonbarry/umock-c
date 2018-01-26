@@ -1,6 +1,6 @@
 
 # umocktypename requirements
- 
+
 # Overview
 
 umocktypename is a module that provides a way to bring C type names to a normalized form in order to ensure that type name comparisons can be made easily.

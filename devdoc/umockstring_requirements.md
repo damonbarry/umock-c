@@ -1,6 +1,6 @@
 
 ﻿# umockstring requirements
- 
+
 # Overview
 
 umockstring is a module that provides the functionality of cloning a string (allocating memory and copying the chars).

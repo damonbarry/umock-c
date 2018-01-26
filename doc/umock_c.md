@@ -1,5 +1,5 @@
 ﻿# umock_c
- 
+
 # Overview
 
 umock_c is a C mocking library that exposes APIs to allow:
@@ -12,9 +12,9 @@ On top of the basic functionality, additional convenience features like modifier
 
 A test written with umock_c looks like below:
 
-Let’s assume unit A depends on unit B. unit B has a function called test_dependency_1_arg.
+Let's assume unit A depends on unit B. unit B has a function called test_dependency_1_arg.
 
-In unit B’s header one would write:
+In unit B's header one would write:
 
 ```c
 #include "umock_prod.h"
@@ -22,7 +22,7 @@ In unit B’s header one would write:
 MOCKABLE_FUNCTION(, int, test_dependency_1_arg, int, a);
 ```
 
-Let’s assume unit A has a function called function_under_test.
+Let's assume unit A has a function called function_under_test.
 
 ```c
 int function_under_test();
@@ -891,7 +891,7 @@ is equivalent to:
 REGISTER_GLOBAL_MOCK_HOOK(mock_function, mock_hook_function)
 ```
 
-The REGISTER_GLOBAL_MOCK_HOOK shall register a mock hook to be called every time the mocked function is called by production code. The hook’s result shall be returned by the mock to the production code.
+The REGISTER_GLOBAL_MOCK_HOOK shall register a mock hook to be called every time the mocked function is called by production code. The hook's result shall be returned by the mock to the production code.
 
 The signature for the hook shall be assumed to have exactly the same arguments and return as the mocked function.
 
