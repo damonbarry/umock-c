@@ -3,7 +3,7 @@
 
 cmake_minimum_required(VERSION 2.8.11)
 
-if (${run_unittests})
+if (${run_unittests} OR ${run_int_tests})
 	add_subdirectory(ctest)
 	add_subdirectory(testrunner)
 endif()
