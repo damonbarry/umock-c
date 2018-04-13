@@ -11,7 +11,9 @@
 #ifndef __cplusplus
 
 typedef unsigned char bool;
+#ifdef _MSC_VER
 typedef bool _Bool;
+#endif
 
 #define false	0
 #define true	1
