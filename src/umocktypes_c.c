@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stddef.h>
+#include <string.h>
 #include "macro_utils.h"
 #include "umocktypes.h"
 #include "umocktypes_c.h"
@@ -13,6 +14,33 @@
 #define snprintf _snprintf
 #endif
 
+#ifdef MAX_UMOCK_TYPE_STRINGIFY_SIZE
+#define IMPLEMENT_STRINGIFY(type, function_postfix, printf_specifier) \
+    char* C2(umocktypes_stringify_,function_postfix)(type* value) \
+    { \
+        char* result; \
+        if (value == NULL) \
+        { \
+            UMOCK_LOG(TOSTRING(C2(umocktypes_stringify_,function_postfix)) ": NULL value."); \
+            result = NULL; \
+        } \
+        else \
+        { \
+            char temp_buffer[MAX_UMOCK_TYPE_STRINGIFY_SIZE]; \
+            size_t length = snprintf(temp_buffer, MAX_UMOCK_TYPE_STRINGIFY_SIZE, printf_specifier, *value); \
+            result = (char*)umockalloc_malloc(length + 1); \
+            if (result == NULL) \
+            { \
+                UMOCK_LOG(TOSTRING(C2(umocktypes_stringify_,function_postfix)) ": Cannot allocate memory for result string."); \
+            } \
+            else \
+            { \
+                (void)snprintf(result, length + 1, printf_specifier, *value); \
+            } \
+        } \
+        return result; \
+    }
+#else /* MAX_STRINGIFY_SIZE */
 #define IMPLEMENT_STRINGIFY(type, function_postfix, printf_specifier) \
     char* C2(umocktypes_stringify_,function_postfix)(type* value) \
     { \
@@ -37,6 +65,7 @@
         } \
         return result; \
     }
+#endif /* MAX_STRINGIFY_SIZE */
 
 #define IMPLEMENT_ARE_EQUAL(type, function_postfix) \
     int C2(umocktypes_are_equal_,function_postfix)(type* left, type* right) \
