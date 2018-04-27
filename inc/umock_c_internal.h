@@ -148,8 +148,8 @@ typedef int(*TRACK_DESTROY_FUNC_TYPE)(PAIRED_HANDLES* paired_handles, const void
 /* Codes_SRS_UMOCK_C_LIB_01_096: [If the content of the code under test buffer and the buffer supplied to ValidateArgumentBuffer does not match then this should be treated as a mismatch in argument comparison for that argument.]*/
 #define ARE_EQUAL_FOR_ARG(count, arg_type, arg_name) \
     if (result && \
-        ((typed_left->validate_arg_buffers[COUNT_OF(typed_left->validate_arg_buffers) - DIV2(count)].bytes != NULL) && (memcmp(*((void**)&typed_right->arg_name), typed_left->validate_arg_buffers[COUNT_OF(typed_left->validate_arg_buffers) - DIV2(count)].bytes, typed_left->validate_arg_buffers[COUNT_OF(typed_left->validate_arg_buffers) - DIV2(count)].length) != 0)) \
-        || ((typed_right->validate_arg_buffers[COUNT_OF(typed_right->validate_arg_buffers) - DIV2(count)].bytes != NULL) && (memcmp(*((void**)&typed_left->arg_name), typed_right->validate_arg_buffers[COUNT_OF(typed_right->validate_arg_buffers) - DIV2(count)].bytes, typed_right->validate_arg_buffers[COUNT_OF(typed_right->validate_arg_buffers) - DIV2(count)].length) != 0)) \
+        (((typed_left->validate_arg_buffers[COUNT_OF(typed_left->validate_arg_buffers) - DIV2(count)].bytes != NULL) && (memcmp(*((void**)&typed_right->arg_name), typed_left->validate_arg_buffers[COUNT_OF(typed_left->validate_arg_buffers) - DIV2(count)].bytes, typed_left->validate_arg_buffers[COUNT_OF(typed_left->validate_arg_buffers) - DIV2(count)].length) != 0)) \
+        || ((typed_right->validate_arg_buffers[COUNT_OF(typed_right->validate_arg_buffers) - DIV2(count)].bytes != NULL) && (memcmp(*((void**)&typed_left->arg_name), typed_right->validate_arg_buffers[COUNT_OF(typed_right->validate_arg_buffers) - DIV2(count)].bytes, typed_right->validate_arg_buffers[COUNT_OF(typed_right->validate_arg_buffers) - DIV2(count)].length) != 0))) \
         ) \
     { \
         result = 0; \
