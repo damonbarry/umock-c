@@ -4,57 +4,38 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 
 umock_c is a C mocking library.
 
-## Setup
-
-### Build
-
-- Clone umock_c by:
+## Build
 
 ```
-git clone --recursive https://github.com/Azure/umock-c.git
-```
-
-- Create a cmake folder under the root of umock-c
-
-- Switch to the cmake folder and run
-```
+git clone https://github.com/Azure/umock-c.git
+cd umock-c
+mkdir build
+cd build
 cmake ..
-```
-
-If you would like to use installed (by CMake) versions of packages already on your machine:
-
-```
-cmake -Duse_installed=ON ../
-```
-
-- Build the code for your platform (msbuild for Windows, make for Linux, etc.) by executing in the cmake folder: 
-
-```
 cmake --build .
 ```
 
-### To install umock_c:
+## Run umock_c's unit and integration tests (optional)
 
 ```
-cmake -Duse_installed=ON ../
-```
-On Linux:
-```
-sudo make install
-```
-On Windows:
-```
-msbuild /m INSTALL.vcxproj
+cmake -DENABLE_UNIT_TESTS=ON -DENABLE_INT_TESTS=ON ..
+cmake --build .
+ctest -C Debug # <- CMake's 'ctest' tool, which invokes our test binaries
 ```
 
-_This requires that ctest and testrunnerswitcher are both installed (through CMake) on your machine._
-
-### Building tests
-
-In order to build the tests use the *run_unittests* cmake option:
+## Install and Use
+To take a dependency on umock_c in your project, install it in your developer environment:
 
 ```
-cmake .. -Drun_unittests:bool=ON
+cmake --build . --target install
+```
+
+If your project uses CMake, refer to umock_c in your CMakeLists.txt file as follows:
+
+```
+find_package(umock_c REQUIRED CONFIG)
+# ...
+target_link_library(yourlib umock_c)
 ```
 
 ## Example

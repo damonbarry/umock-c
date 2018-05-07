@@ -1,156 +1,121 @@
 #Copyright (c) Microsoft. All rights reserved.
 #Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-cmake_minimum_required(VERSION 2.8.11)
+cmake_minimum_required(VERSION 2.8.11 FATAL_ERROR)
 
-if(TARGET umock_c)
-    return()
+# Use @rpath in a target’s install name
+if(POLICY CMP0042)
+  cmake_policy(SET CMP0042 NEW)
 endif()
 
-option(run_unittests "set run_unittests to ON to run unittests (default is OFF)" OFF)
-option(run_int_tests "set run_int_tests to ON to run the integration tests (default is OFF)" OFF)
-option(use_installed_dependencies "set use_installed_dependencies to ON to use installed packages instead of building dependencies from submodules" OFF)
-option(use_cppunittest "set use_cppunittest to ON to build CppUnitTest tests on Windows (default is ON)" OFF)
+# Specify a VERSION in the project() command
+if(POLICY CMP0048)
+  cmake_policy(SET CMP0048 NEW)
+endif()
 
-project(umock_c)
+option(ENABLE_UNIT_TESTS "Build unit tests" OFF)
+option(ENABLE_INT_TESTS "Build unit tests" OFF)
+option(USE_CPPUNITTEST "Use CppUnitTest on Windows" OFF)
+option(BUILD_SHARED_LIBS "Build shared libraries rather than static" ON)
 
-set(UMOCK_C_VERSION 1.1.19)
+project(umock_c VERSION 1.1.19)
 
-#Use solution folders.
+set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+
+# Use solution folders in Visual Studio
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-# Build with -fPIC always
-set(CMAKE_POSITION_INDEPENDENT_CODE TRUE)
+# Build
 
-# Build with -Werror
-if(MSVC)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /W4")
-elseif(UNIX) # LINUX OR APPLE
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Werror")
-endif()
+set(c_files
+    src/umock_c.c
+    src/umock_c_negative_tests.c
+    src/umockalloc.c
+    src/umockcall.c
+    src/umockcallrecorder.c
+    src/umocktypename.c
+    src/umocktypes.c
+    src/umocktypes_bool.c
+    src/umocktypes_c.c
+    src/umocktypes_stdint.c
+    src/umocktypes_charptr.c
+    src/umockcallpairs.c
+    src/umockstring.c
+    src/umockautoignoreargs.c
+    src/umock_log.c)
 
-include (CTest)
-include (CheckIncludeFiles)
+set(h_files
+    inc/umock_c.h
+    inc/umock_c_internal.h
+    inc/umock_c_negative_tests.h
+    inc/umock_c_prod.h
+    inc/umockalloc.h
+    inc/umockcall.h
+    inc/umockcallrecorder.h
+    inc/umocktypename.h
+    inc/umocktypes.h
+    inc/umocktypes_bool.h
+    inc/umocktypes_c.h
+    inc/umocktypes_stdint.h
+    inc/umocktypes_charptr.h
+    inc/umockcallpairs.h
+    inc/umockstring.h
+    inc/umockautoignoreargs.h
+    inc/umock_log.h)
 
-# Add dependencies or submodules if use_installed_dependencies is OFF
-include(dependencies.cmake)
+include_directories(inc)
 
-set(umock_c_c_files
-./src/umock_c.c
-./src/umock_c_negative_tests.c
-./src/umockalloc.c
-./src/umockcall.c
-./src/umockcallrecorder.c
-./src/umocktypename.c
-./src/umocktypes.c
-./src/umocktypes_bool.c
-./src/umocktypes_c.c
-./src/umocktypes_stdint.c
-./src/umocktypes_charptr.c
-./src/umockcallpairs.c
-./src/umockstring.c
-./src/umockautoignoreargs.c
-./src/umock_log.c
-)
+include(CompilerFlags)
 
-set(umock_c_h_files
-./inc/umock_c.h
-./inc/umock_c_internal.h
-./inc/umock_c_negative_tests.h
-./inc/umockalloc.h
-./inc/umockcall.h
-./inc/umockcallrecorder.h
-./inc/umocktypename.h
-./inc/umocktypes.h
-./inc/umocktypes_bool.h
-./inc/umocktypes_c.h
-./inc/umocktypes_stdint.h
-./inc/umocktypes_charptr.h
-./inc/umockcallpairs.h
-./inc/umockstring.h
-./inc/umockautoignoreargs.h
-./inc/umock_log.h
-)
+add_library(umock_c ${c_files})
 
-IF(WIN32)
-    #windows needs this define
-    add_definitions(-D_CRT_SECURE_NO_WARNINGS)
-    # Make warning as error
-    add_definitions(/WX)
-ENDIF()
+set_target_properties(umock_c PROPERTIES FOLDER "test_tools")
 
-add_library(umock_c ${umock_c_c_files} ${umock_c_h_files})
+# Test
 
-set_target_properties(umock_c
-               PROPERTIES
-               FOLDER "test_tools") 
+if(ENABLE_UNIT_TESTS OR ENABLE_INT_TESTS)
+    enable_testing()
 
-#these are the include folders
-#the following "set" statetement exports across the project a global variable called UMOCK_C_INC_FOLDER that expands to whatever needs to included when using umock_c library
-set(UMOCK_C_INC_FOLDER ${CMAKE_CURRENT_LIST_DIR}/inc CACHE INTERNAL "this is what needs to be included if using umock_c lib" FORCE)
+    find_package(ctest REQUIRED CONFIG)
 
-include_directories(${UMOCK_C_INC_FOLDER} ${SHARED_UTIL_INC_FOLDER})
+    include(CheckIncludeFiles)
+    check_include_files("stdint.h;stdbool.h" HAS_C99_TYPES)
+    if(NOT HAS_C99_TYPES)
+        include_directories(${CTEST_INCLUDES}/aux_inc)
+    endif()    
 
-CHECK_INCLUDE_FILES(stdint.h HAVE_STDINT_H)
-CHECK_INCLUDE_FILES(stdbool.h HAVE_STDBOOL_H)
-
-if ((NOT HAVE_STDINT_H) OR (NOT HAVE_STDBOOL_H))
-    include_directories(${UMOCK_C_INC_FOLDER}/aux_inc)
-endif()
-
-include("configs/umock_cFunctions.cmake")
-
-if (${run_unittests} OR ${run_int_tests})
+    find_package(testrunnerswitcher REQUIRED CONFIG)
+    include("configs/umock_cFunctions.cmake")
     add_subdirectory(tests)
 endif()
 
-if(${use_installed_dependencies})
-    # Set CMAKE_INSTALL_* if not defined
-    include(GNUInstallDirs)
+# Install
+include(GNUInstallDirs) # Set CMAKE_INSTALL_<dir>
 
-    if(NOT DEFINED CMAKE_INSTALL_LIBDIR)
-        set(CMAKE_INSTALL_LIBDIR "lib")
-    endif()
-
-    # Install UMock C
-    set(package_location "cmake")
-
-    install(TARGETS umock_c EXPORT umock_cTargets
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        RUNTIME DESTINATION ${CMAKE_INSTALL_LIBDIR}/../bin
-        INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-    )
-    install(FILES ${umock_c_h_files} "./inc/umock_c_prod.h" DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-
-    include(CMakePackageConfigHelpers)
-
-    write_basic_package_version_file(
-        "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}/${PROJECT_NAME}ConfigVersion.cmake"
-        VERSION ${UMOCK_C_VERSION}
-        COMPATIBILITY SameMajorVersion
-    )
-
-    configure_file("configs/${PROJECT_NAME}Config.cmake"
-        "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}/${PROJECT_NAME}Config.cmake"
-        COPYONLY
-    )
-
-    install(EXPORT umock_cTargets
-        FILE
-            "${PROJECT_NAME}Targets.cmake"
-        DESTINATION
-            ${package_location}
-    )
-
-    install(
-        FILES
-            "configs/${PROJECT_NAME}Functions.cmake"
-            "configs/${PROJECT_NAME}Config.cmake"
-            "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}/${PROJECT_NAME}ConfigVersion.cmake"
-        DESTINATION
-            ${package_location}
-    )
+if(NOT DEFINED CMAKE_INSTALL_LIBDIR)
+    set(CMAKE_INSTALL_LIBDIR "lib")
 endif()
+
+configure_file("configs/${PROJECT_NAME}Config.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}/${PROJECT_NAME}Config.cmake"
+    COPYONLY)
+
+include(CMakePackageConfigHelpers)
+write_basic_package_version_file(
+    "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}/${PROJECT_NAME}ConfigVersion.cmake"
+    COMPATIBILITY SameMajorVersion)
+
+install(TARGETS umock_c EXPORT umock_cTargets
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}/static
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})    
+install(FILES ${h_files}
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+install(EXPORT umock_cTargets
+    FILE "${PROJECT_NAME}Targets.cmake"
+    DESTINATION cmake)
+install(FILES
+    "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}/${PROJECT_NAME}Config.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}/${PROJECT_NAME}ConfigVersion.cmake"
+    DESTINATION cmake)

@@ -9,56 +9,28 @@ for %%i in ("%build-root%") do set build-root=%%~fi
 
 @echo off
 
-set repo_root=%build-root%\..
-rem // resolve to fully qualified path
-for %%i in ("%repo_root%") do set repo_root=%%~fi
-
-echo Build Root: %build-root%
-echo Repo Root: %repo_root%
-
 set CMAKE_DIR=umockc_win32
 
-rem -----------------------------------------------------------------------------
-rem -- build with CMAKE and run tests
-rem -----------------------------------------------------------------------------
+echo CMAKE Output Path: %build-root%\build\%CMAKE_DIR%
 
-echo CMAKE Output Path: %build-root%\cmake\%CMAKE_DIR%
-
-if EXIST %build-root%\cmake\%CMAKE_DIR% (
-    rmdir /s/q %build-root%\cmake\%CMAKE_DIR%
+if EXIST %build-root%\build\%CMAKE_DIR% (
+    rmdir /s/q %build-root%\build\%CMAKE_DIR%
     rem no error checking
 )
 
-echo %build-root%\cmake\%CMAKE_DIR%
-mkdir %build-root%\cmake\%CMAKE_DIR%
+echo %build-root%\build\%CMAKE_DIR%
+mkdir %build-root%\build\%CMAKE_DIR%
 rem no error checking
-pushd %build-root%\cmake\%CMAKE_DIR%
+pushd %build-root%\build\%CMAKE_DIR%
 
 echo ***Running CMAKE for Win32***   
-cmake %build-root% -Drun_unittests:BOOL=ON
+cmake -DENABLE_UNIT_TESTS=ON -DENABLE_INT_TESTS=ON %build-root%
 if not !ERRORLEVEL!==0 exit /b !ERRORLEVEL!
 
-call :_run-msbuild "Build" umock_c.sln
+cmake --build . -- /m "/p:Configuration=Debug;Platform=Win32"
 if not !ERRORLEVEL!==0 exit /b !ERRORLEVEL!
     
 ctest -C "debug" -V
 if not !ERRORLEVEL!==0 exit /b !ERRORLEVEL!
 
 popd
-goto :eof
-
-rem -----------------------------------------------------------------------------
-rem -- subroutines
-rem -----------------------------------------------------------------------------
-
-:_run-msbuild
-rem // optionally override configuration|platform
-setlocal EnableExtensions
-set build-target=
-if "%~1" neq "Build" set "build-target=/t:%~1"
-
-msbuild /m %build-target% "/p:Configuration=Debug;Platform=Win32" %2
-if not !ERRORLEVEL!==0 exit /b !ERRORLEVEL!
-goto :eof
-
-echo done

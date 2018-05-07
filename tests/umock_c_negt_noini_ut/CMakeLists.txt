@@ -3,7 +3,7 @@
 
 cmake_minimum_required(VERSION 2.8.11)
 
-set(theseTestsName umock_c_negt_noint_tests)
+set(theseTestsName umock_c_negt_noinit_ut)
 
 set(${theseTestsName}_test_files
 umock_c_negt_noint_tests.c

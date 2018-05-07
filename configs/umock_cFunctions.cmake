@@ -20,24 +20,6 @@ function(umockc_windows_unittests_add_dll whatIsBuilding)
     target_link_libraries(${whatIsBuilding}_dll ctest testrunnerswitcher ${ARGN})
 endfunction()
 
-function(umockc_windows_unittests_add_lib whatIsBuilding)
-    link_directories(${whatIsBuilding}_lib $ENV{VCInstallDir}UnitTest/lib)
-    
-    add_library(${whatIsBuilding}_lib STATIC 
-        ${${whatIsBuilding}_test_files} 
-        ${${whatIsBuilding}_h_files} 
-        ${${whatIsBuilding}_c_files}
-    )
-
-    set_target_properties(${whatIsBuilding}_lib
-               PROPERTIES
-               FOLDER "tests/umockc_tests")
-    
-    target_include_directories(${whatIsBuilding}_lib PUBLIC ${sharedutil_include_directories})
-    target_compile_definitions(${whatIsBuilding}_lib PUBLIC -DUSE_CTEST)
-    target_link_libraries(${whatIsBuilding}_lib ctest testrunnerswitcher ${ARGN})
-endfunction()
-
 function(umockc_windows_unittests_add_exe whatIsBuilding)
     add_executable(${whatIsBuilding}_exe
         ${${whatIsBuilding}_test_files} 
@@ -72,28 +54,21 @@ function(umockc_build_test_artifacts whatIsBuilding use_gballoc)
     else()
     endif()
     
-    #setting includes
-    set(sharedutil_include_directories ${MICROMOCK_INC_FOLDER} ${TESTRUNNERSWITCHER_INC_FOLDER} ${CTEST_INC_FOLDER} ${SAL_INC_FOLDER} ${SHARED_UTIL_INC_FOLDER} ${SHARED_UTIL_SRC_FOLDER})
-    if(WIN32)
-    else()
-        include_directories(${sharedutil_include_directories})
-    endif()
-
     #setting output type
     if(WIN32)
         if(
-            (("${whatIsBuilding}" MATCHES ".*ut.*") AND ${run_unittests}) OR
-            (("${whatIsBuilding}" MATCHES ".*int.*") AND ${run_int_tests})
+            (("${whatIsBuilding}" MATCHES ".*_ut") AND ${ENABLE_UNIT_TESTS}) OR
+            (("${whatIsBuilding}" MATCHES ".*_int") AND ${ENABLE_INT_TESTS})
         )
             umockc_windows_unittests_add_exe(${whatIsBuilding} ${ARGN})
-            if (${use_cppunittest})
+            if (${USE_CPPUNITTEST})
                 umockc_windows_unittests_add_dll(${whatIsBuilding} ${ARGN})
             endif()
         endif()
     else()
         if(
-            (("${whatIsBuilding}" MATCHES ".*ut.*") AND ${run_unittests}) OR
-            (("${whatIsBuilding}" MATCHES ".*int.*") AND ${run_int_tests})
+            (("${whatIsBuilding}" MATCHES ".*_ut") AND ${ENABLE_UNIT_TESTS}) OR
+            (("${whatIsBuilding}" MATCHES ".*_int") AND ${ENABLE_INT_TESTS})
         )
             umockc_windows_unittests_add_exe(${whatIsBuilding} ${ARGN})
         endif()

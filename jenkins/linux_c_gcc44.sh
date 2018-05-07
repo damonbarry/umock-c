@@ -8,12 +8,12 @@ set -e
 script_dir=$(cd "$(dirname "$0")" && pwd)
 build_root=$(cd "${script_dir}/.." && pwd)
 log_dir=$build_root
-build_folder=$build_root"/cmake"
+build_folder=$build_root"/build"
 
 rm -r -f $build_folder
 mkdir -p $build_folder
 pushd $build_folder
-cmake .. -Drun_valgrind:BOOL=ON -Drun_unittests:bool=ON -Drun_int_tests:bool=ON
-make --jobs=$(nproc)
+cmake -DENABLE_UNIT_TESTS=ON -DENABLE_INT_TESTS=ON..
+cmake --build . -- --jobs=$(nproc)
 
 popd
